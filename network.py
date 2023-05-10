@@ -252,7 +252,8 @@ if not os.path.exists(f"{dataset}/x.pkl") or not not os.path.exists(f"{dataset}/
 if args.pretrained:
     # Load the pretrained model from the specified path
     model = tf.keras.models.load_model(args.pretrained)
-elif args.epochs != 0:
+
+if args.epochs:
     # Convert the lists to numpy arrays
     X = np.array(tf.convert_to_tensor(X), dtype=float)
     Y_labels_onehot = np.array(Y_labels_onehot)
