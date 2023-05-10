@@ -59,17 +59,29 @@ import argparse
 
 parser = argparse.ArgumentParser(description='Example Neural Network for OmniOpt-Hackathon')
 
-parser.add_argument('--epochs', type=int, default=10, help='number of epochs to train the model (default: 10)')
-parser.add_argument('--visualization-steps', type=int, default=1000, help='Number of visualization steps (default: 1000)')
-parser.add_argument('--visualization-lr', type=float, default=0.05, help='Visualization Learning Rate (default: 0.05)')
-parser.add_argument('--dataset', type=str, default="full", help='Path of the training data directory. Possibilities are full for the full dataset and tiny_train_data for testing the network.')
-parser.add_argument('--no-shuffle', dest='shuffle', action='store_false', help='Disable shuffling (default: True)')
-parser.add_argument('--validation-split', type=validation_split_check, default=0.1, help='Validation split ratio (default: 0.1)')
-parser.add_argument('--visualize', action='store_true', help='Disable visualization')
-parser.add_argument('--use-max-pooling', action='store_true', default=False, help='Enables max pooling after each convolutional layer')
-parser.add_argument('--debug', action='store_true', help='Show debug messages')
-parser.add_argument('--start-firefox-if-ssh', action='store_true', help='Show visualization images in firefox if ssh -X is available (or local X-Server is installed)')
-parser.add_argument('--pretrained', type=str, help='Path to a pretrained model. This skips training and allows to visualize any model.')
+# Add the different parameter groups
+training_group = parser.add_argument_group('Training Settings')
+visualization_group = parser.add_argument_group('Visualization Settings')
+debug_group = parser.add_argument_group('Debugging Settings')
+pretrained_group = parser.add_argument_group('Pretrained Model')
+misc_group = parser.add_argument_group('Miscellaneous Settings')
+
+# Add the parameters to the different groups
+training_group.add_argument('--epochs', type=int, default=10, help='number of epochs to train the model (default: 10)')
+training_group.add_argument('--dataset', type=str, default="full", help='Path of the training data directory. Possibilities are full for the full dataset and tiny_train_data for testing the network.')
+training_group.add_argument('--validation-split', type=float, default=0.1, help='Validation split ratio (default: 0.1)')
+training_group.add_argument('--no-shuffle', dest='shuffle', action='store_false', help='Disable shuffling (default: True)')
+
+visualization_group.add_argument('--visualize', action='store_true', help='Enable visualization')
+visualization_group.add_argument('--visualization-steps', type=int, default=1000, help='Number of visualization steps (default: 1000)')
+visualization_group.add_argument('--visualization-lr', type=float, default=0.05, help='Visualization Learning Rate (default: 0.05)')
+visualization_group.add_argument('--use-max-pooling', action='store_true', default=False, help='Enables max pooling after each convolutional layer')
+
+debug_group.add_argument('--debug', action='store_true', help='Enable debugging messages')
+
+pretrained_group.add_argument('--pretrained', type=str, help='Path to a pretrained model. This skips training and allows to visualize any model.')
+
+misc_group.add_argument('--start-firefox-if-ssh', action='store_true', help='Show visualization images in firefox if ssh -X is available (or local X-Server is installed)')
 
 args = parser.parse_args()
 
