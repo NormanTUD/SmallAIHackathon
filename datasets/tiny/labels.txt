@@ -1,0 +1,3 @@
+0: rauchring
+1: raketenspirale
+2: skytracker
