@@ -14,7 +14,12 @@ if type ml 2>&1 >/dev/null; then
 fi
 
 if [[ ! -e "$HOME/.oo_hackathon_environment/bin/activate" ]]; then
-	source install.sh
+	if [[ ! -d "$HOME/.oo_hackathon_environment/" ]]; then
+		source install.sh
+	else
+		echo "Error: the ~/.oo_hackathon_environment already exists, but has no bin/activate. Try deleting ~/.oo_hackathon_environment and running 'bash install.sh' manually again" >&2
+		exit 255
+	fi
 fi
 source ~/.oo_hackathon_environment/bin/activate
 
