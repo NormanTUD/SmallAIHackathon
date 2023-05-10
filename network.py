@@ -66,6 +66,7 @@ parser.add_argument('--dataset', type=str, default="full", help='Path of the tra
 parser.add_argument('--no-shuffle', dest='shuffle', action='store_false', help='Disable shuffling (default: True)')
 parser.add_argument('--validation-split', type=validation_split_check, default=0.1, help='Validation split ratio (default: 0.1)')
 parser.add_argument('--visualize', action='store_true', help='Disable visualization')
+parser.add_argument('--use-max-pooling', action='store_true', help='Enables max pooling after each convolutional layer')
 parser.add_argument('--debug', action='store_true', help='Show debug messages')
 parser.add_argument('--start-firefox-if-ssh', action='store_true', help='Show visualization images in firefox if ssh -X is available (or local X-Server is installed)')
 parser.add_argument('--pretrained', type=str, help='Path to a pretrained model. This skips training and allows to visualize any model.')
@@ -292,12 +293,13 @@ if args.epochs:
             print(f"{bcolors.FAIL}There was an error adding more convolution layers. This may mean that the input width and height are too small or the number of convolutional layers is too high.{bcolors.ENDC}")
             sys.exit(1)
 
-        try:
-            model.add(tf.keras.layers.MaxPooling2D((hyperparameters["max_pooling_size"], hyperparameters["max_pooling_size"])))
-        except:
-            print(f"{bcolors.FAIL}There was an error adding a MaxPooling2D layer. This may mean that the input width and height are too small or the number of convolutional layers is too high.{bcolors.ENDC}")
+        if args.use_max_pooling:
+            try:
+                model.add(tf.keras.layers.MaxPooling2D((hyperparameters["max_pooling_size"], hyperparameters["max_pooling_size"])))
+            except:
+                print(f"{bcolors.FAIL}There was an error adding a MaxPooling2D layer. This may mean that the input width and height are too small or the number of convolutional layers is too high.{bcolors.ENDC}")
 
-            sys.exit(1)
+                sys.exit(1)
 
     model.add(tf.keras.layers.Flatten())
 
