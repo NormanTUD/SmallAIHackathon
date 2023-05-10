@@ -66,7 +66,7 @@ parser.add_argument('--dataset', type=str, default="full", help='Path of the tra
 parser.add_argument('--no-shuffle', dest='shuffle', action='store_false', help='Disable shuffling (default: True)')
 parser.add_argument('--validation-split', type=validation_split_check, default=0.1, help='Validation split ratio (default: 0.1)')
 parser.add_argument('--visualize', action='store_true', help='Disable visualization')
-parser.add_argument('--use-max-pooling', action='store_true', help='Enables max pooling after each convolutional layer')
+parser.add_argument('--use-max-pooling', action='store_true', default=False, help='Enables max pooling after each convolutional layer')
 parser.add_argument('--debug', action='store_true', help='Show debug messages')
 parser.add_argument('--start-firefox-if-ssh', action='store_true', help='Show visualization images in firefox if ssh -X is available (or local X-Server is installed)')
 parser.add_argument('--pretrained', type=str, help='Path to a pretrained model. This skips training and allows to visualize any model.')
