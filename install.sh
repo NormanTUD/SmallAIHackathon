@@ -11,3 +11,5 @@ python3 -m venv ~/.oo_hackathon_environment
 source ~/.oo_hackathon_environment/bin/activate
 
 pip3 install pytz python-dateutil tqdm
+
+# pip3 install Pillow pandas tensorflow

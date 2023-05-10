@@ -65,9 +65,9 @@ parser.add_argument('--visualization-lr', type=float, default=0.05, help='Visual
 parser.add_argument('--dataset', type=str, default="full", help='Path of the training data directory. Possibilities are full for the full dataset and tiny_train_data for testing the network.')
 parser.add_argument('--no-shuffle', dest='shuffle', action='store_false', help='Disable shuffling (default: True)')
 parser.add_argument('--validation-split', type=validation_split_check, default=0.1, help='Validation split ratio (default: 0.1)')
-parser.add_argument('--no-visualize', action='store_true', help='Disable visualization')
+parser.add_argument('--visualize', action='store_true', help='Disable visualization')
 parser.add_argument('--debug', action='store_true', help='Show debug messages')
-parser.add_argument('--start_firefox_if_ssh', action='store_true', help='Show visualization images in firefox if ssh -X is available (or local X-Server is installed)')
+parser.add_argument('--start-firefox-if-ssh', action='store_true', help='Show visualization images in firefox if ssh -X is available (or local X-Server is installed)')
 parser.add_argument('--pretrained', type=str, help='Path to a pretrained model. This skips training and allows to visualize any model.')
 
 args = parser.parse_args()
@@ -252,8 +252,7 @@ if not os.path.exists(f"{dataset}/x.pkl") or not not os.path.exists(f"{dataset}/
 if args.pretrained:
     # Load the pretrained model from the specified path
     model = tf.keras.models.load_model(args.pretrained)
-else:
-
+elif args.epochs != 0:
     # Convert the lists to numpy arrays
     X = np.array(tf.convert_to_tensor(X), dtype=float)
     Y_labels_onehot = np.array(Y_labels_onehot)
@@ -460,7 +459,7 @@ def generate_max_activation_image(filter_index, iterations=args.visualization_st
 
 stop_file = os.path.expanduser('~/stop_visualizing')
 
-if not args.no_visualize and not os.path.exists(stop_file):
+if args.visualize and not os.path.exists(stop_file):
     layer = len(model.layers) - 1 # last layer
     num_filters = model.layers[layer].output_shape[-1]
     vis_folder = f"runs/{run_folder}/visualizations"
