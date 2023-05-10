@@ -9,7 +9,7 @@ cd $SCRIPT_DIR
 
 echo $SCRIPT_DIR
 
-if type ml 2>&1 >/dev/null; then
+if declare -f -F ml >/dev/null; then
 	ml modenv/hiera GCC/11.2.0 OpenMPI/4.1.1 TensorFlow/2.7.1-CUDA-11.4.1 Pillow SciPy-bundle
 fi
 
