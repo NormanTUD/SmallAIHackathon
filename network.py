@@ -68,9 +68,21 @@ misc_group = parser.add_argument_group('Miscellaneous Settings')
 
 # Add the parameters to the different groups
 training_group.add_argument('--epochs', type=int, default=10, help='number of epochs to train the model (default: 10)')
-training_group.add_argument('--dataset', type=str, default="full", help='Path of the training data directory. Possibilities are full for the full dataset and tiny_train_data for testing the network.')
-training_group.add_argument('--validation-split', type=float, default=0.1, help='Validation split ratio (default: 0.1)')
-training_group.add_argument('--no-shuffle', dest='shuffle', action='store_false', help='Disable shuffling (default: True)')
+training_group.add_argument('--batch-size', type=int, default=10, help='batch size (default: 10)')
+training_group.add_argument('--shuffle', action='store_true', default=True, help='shuffle the data (default: True)')
+training_group.add_argument('--validation-split', type=float, default=0.1, help='validation split ratio (default: 0.1)')
+training_group.add_argument('--learning-rate', type=float, default=0.001, help='learning rate (default: 0.001)')
+training_group.add_argument('--width', type=int, default=220, help='image width (default: 220)')
+training_group.add_argument('--height', type=int, default=220, help='image height (default: 220)')
+
+model_architecture_group = parser.add_argument_group('Model Architecture Parameters')
+model_architecture_group.add_argument('--activation-function', type=str, default='relu', help='Activation function for convolutional layers (default: relu)')
+model_architecture_group.add_argument('--num-conv-layers', type=int, default=4, help='Number of convolutional layers (default: 4)')
+model_architecture_group.add_argument('--conv-filters', type=int, default=16, help='Number of filters for convolutional layers (default: 16)')
+model_architecture_group.add_argument('--padding', type=str, default='same', help='Padding for convolutional layers (default: same)')
+model_architecture_group.add_argument('--max-pool-size', type=int, default=2, help='Max pooling size (default: 2)')
+model_architecture_group.add_argument('--num-dense-layers', type=int, default=4, help='Number of dense layers (default: 4)')
+model_architecture_group.add_argument('--dense-neurons', type=int, default=32, help='Number of neurons in dense layers (default: 32)')
 
 visualization_group.add_argument('--visualize', action='store_true', help='Enable visualization')
 visualization_group.add_argument('--visualization-steps', type=int, default=1000, help='Number of visualization steps (default: 1000)')
@@ -97,24 +109,24 @@ def debug (msg):
 
 hyperparameters = {
     "epochs": args.epochs,
-    "batch_size": 10,
+    "batch_size": args.batch_size,
     "shuffle": args.shuffle,
     "validation_split": args.validation_split,
+    "learning_rate": args.learning_rate,
     "seed": 42,
-    "learning_rate": 0.001,
 
-    "width": 220,
-    "height": 220,
+    "width": args.width,
+    "height": args.height,
 
-    "activation_function": 'relu',
+    "activation_function": args.activation,
 
-    "number_of_convolutions": 4,
-    "conv_filters": 16,
-    "padding_name": "same", # other possible option: valid
-    "max_pooling_size": 2,
+    "number_of_convolutions": args.num_conv_layers,
+    "conv_filters": args.conv_filters,
+    "padding_name": args.padding, # other possible option: valid
+    "max_pooling_size": args.max_pool_size,
 
-    "number_of_dense_layers": 4,
-    "dense_neurons":  32
+    "number_of_dense_layers": args.num_dense_layers,
+    "dense_neurons":  args.dense_neurons
 }
 
 debug(hyperparameters)
