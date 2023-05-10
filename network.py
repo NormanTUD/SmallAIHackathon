@@ -74,9 +74,10 @@ training_group.add_argument('--validation-split', type=float, default=0.1, help=
 training_group.add_argument('--learning-rate', type=float, default=0.001, help='learning rate (default: 0.001)')
 training_group.add_argument('--width', type=int, default=220, help='image width (default: 220)')
 training_group.add_argument('--height', type=int, default=220, help='image height (default: 220)')
+training_group.add_argument('--dataset', type=str, default="full", help='Path of the training data directory. Possibilities are full for the full dataset and tiny_train_data for testing the network.')
 
 model_architecture_group = parser.add_argument_group('Model Architecture Parameters')
-model_architecture_group.add_argument('--activation-function', type=str, default='relu', help='Activation function for convolutional layers (default: relu)')
+model_architecture_group.add_argument('--activation', type=str, default='relu', help='Activation function for convolutional layers (default: relu)')
 model_architecture_group.add_argument('--num-conv-layers', type=int, default=4, help='Number of convolutional layers (default: 4)')
 model_architecture_group.add_argument('--conv-filters', type=int, default=16, help='Number of filters for convolutional layers (default: 16)')
 model_architecture_group.add_argument('--padding', type=str, default='same', help='Padding for convolutional layers (default: same)')
